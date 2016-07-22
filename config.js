@@ -10,4 +10,10 @@ exports.root = __dirname;
 
 exports.WMSServerCapabilities = __dirname + '/xml/WMSServer.xml';
 
-exports.styleDir = __dirname + '/layers/';
+exports.fontDirectory = __dirname + '/map/fonts'
+
+exports.geodataDirectory = __dirname + '/map/geodata'
+
+exports.styles = __dirname + '/map/styles.xml'
+
+exports.layers = __dirname + '/map/layers.js'
