@@ -11,7 +11,9 @@ module.exports.invalidQueryFormat = function(){
       return xml;
 }
 
-ERROR_CODES = {
+const ERROR_CODES = {
+	InvalidRequest: "Request contains invalid 'REQUEST' parameter.",
+	InvalidBBox: "Request contains a BBOX that is incomplete or illogical.",
 	InvalidFormat: "Request contains a Format not offered by the server.",
 	InvalidCRS: "Request contains a CRS not offered by the server for one or more of the Layers in the request.",
 	LayerNotDefined: "GetMap request is for a Layer not offered by the server", //, or GetFeatureInfo request is for a Layer not shown on the map.
@@ -49,4 +51,5 @@ module.exports.buildServiceExceptionReportForError = function(errorCode){
         .att('xsi:schemaLocation', "http://www.opengis.net/ogc http://schemas.opengis.net/wms/1.3.0/exceptions_1_3_0.xsd");
 
    	ServiceExceptionReport.ele('ServiceException', {'code': errorCode}, ERROR_CODES[errorCode])
+   	return ServiceExceptionReport.end({pretty: true});
 }

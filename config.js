@@ -2,7 +2,7 @@
  Configuration options
  ********************************************************************/
 
-exports.port = 2468;
+exports.port = 4326;
 
 exports.logLevel = 'dev';
 

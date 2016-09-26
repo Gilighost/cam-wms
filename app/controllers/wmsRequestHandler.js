@@ -1,42 +1,151 @@
 var config = require('../../config'),
     getCapabilitiesHandler = require('./getCapabilitiesHandler'),
     getMapHandler = require('./getMapHandler'),
+    getFeatureInfoHandler = require('./getFeatureInfoHandler'),
     errorMessageBuilder = require('./errorMessageBuilder'),
     sendXML = require('./sendXML');
 
+/*
+http://45.55.89.43:4326/wms?service=wms&request=getmap&layers=world_merc&styles=&format=png&height=500&width=500&bbox=-166.9921875,-168.3984375,166.9921875,168.3984375&crs=epsg:4326&version=1.3.0
+http://45.55.89.43:4326/wms?service=wms&request=getfeatureinfo&layers=world_merc&styles=&format=png&height=500&width=500&bbox=-166.9921875,-168.3984375,166.9921875,168.3984375&crs=epsg:4326&version=1.3.0&query_layers=&info_format=&i=&j=
+*/
+
 module.exports =
-  function(req, res) {
+function(req, res) {
+    validateRequest(req, function(error, mapReqObj){
+    	console.log(mapReqObj);
+    	if(error){
+    		console.log("Error handling request...")
+    		sendXML(res, error);
+    	}
+    	else{
+			switch(mapReqObj.request){
+		       	case 'getcapabilities':
+		        	getCapabilitiesHandler(mapReqObj, res)
+		         	break;
+		      	case 'getmap':
+		      		getMapHandler(mapReqObj, res)
+		      		break;
+		      	case 'getfeatureinfo':
+				  	getFeatureInfoHandler(mapReqObj, res)
+		      		break;
+		      	default:
+		      		console.log('error: invalid request')
+		      		sendXML(res, errorMessageBuilder.invalidQueryFormat());
+	    	}
+    	}    	
+  	})
+}    
 
-    req.query = keysToLowerCase(req.query);
+const REQUIRED_REQUEST_PARAMETERS = {
+    base: [
+    	{type: 'string', name: 'service'},
+		{type: 'string', name: 'request'}
+	],
+    getMap: [
+	    {type: 'array', name: 'layers'},
+	    {type: 'array', name: 'styles'}, 
+	    {type: 'string', name: 'format'}, 
+	    {type: 'int', name: 'height'}, 
+	    {type: 'int', name: 'width'}, 
+	    {type: 'array', name: 'bbox'}, 
+	    {type: 'string', name: 'version'}, 
+	    {type: 'string', name: 'srs'}
+    ],
+    getFeatureInfo: [
+	    {type: 'array', name: 'layers'},
+	    {type: 'array', name: 'styles'}, 
+	    {type: 'string', name: 'format'}, 
+	    {type: 'int', name: 'height'}, 
+	    {type: 'int', name: 'width'}, 
+	    {type: 'array', name: 'bbox'}, 
+	    {type: 'string', name: 'version'}, 
+	    {type: 'string', name: 'srs'},
+	    {type: 'array', name: 'query_layers'},
+	    {type: 'string', name: 'info_format'},
+	    {type: 'int', name: 'i'},
+	    {type: 'int', name: 'j'}
+    ]
+}
 
-    var service = req.query.service ? req.query.service.toLowerCase() : undefined;
-    if(service == 'wms'){
-      var request = req.query.request ? req.query.request.toLowerCase() : undefined;
-      switch(request){
-          case 'getcapabilities':
-              getCapabilitiesHandler(req, res)
-              break;
-          case 'getmap':
-              getMapHandler(req, res)
-              break;
-          default:
-              sendXML(res, errorMessageBuilder.invalidQueryFormat());
-      }
+function validateRequest(req, callback){
+    var mapReqObj = {}
+    var errorMessage = undefined;
+    req.query = keyAndValueToLowerCase(req.query);
+
+    mapReqObj = getMapRequestObject('base', req.query);
+    if(mapReqObj.missingParams.length > 0){
+        errorMessage = errorMessageBuilder.buildServiceExceptionReportForMissingParams(mapReqObj.missingParams);
+        callback(errorMessage);
     }
     else{
-      sendXML(res, errorMessageBuilder.invalidQueryFormat());
+        var request = req.query['request'];
+        switch(request){
+            case 'getcapabilities':
+                //base is all thats required
+                break;
+            case 'getmap':
+                extend(mapReqObj, getMapRequestObject('getMap', req.query));
+                break;
+            case 'getfeatureinfo':
+                extend(mapReqObj, getMapRequestObject('getFeatureInfo', req.query));
+                break;
+            default:
+                errorMessage = errorMessageBuilder.buildServiceExceptionReportForError('InvalidRequest');
+        }
+
+        if(mapReqObj.missingParams.length > 0){
+            errorMessage = errorMessageBuilder.buildServiceExceptionReportForMissingParams(mapReqObj.missingParams);                 
+        }
+        callback(errorMessage, mapReqObj)
     }
-  };
+}
 
+function getMapRequestObject(requestType, requestQuery){
+    var mapRequestObject = {};
+    mapRequestObject.missingParams = [];
+    if(Object.keys(requestQuery).indexOf('srs') == -1 && Object.keys(requestQuery).indexOf('crs') != -1){
+    	requestQuery['srs'] = requestQuery['crs'];
+    	delete requestQuery['crs'];
+    }
+    REQUIRED_REQUEST_PARAMETERS[requestType].forEach(function(element, index, array){    	
+        if(Object.keys(requestQuery).indexOf(element.name) == -1){
+            mapRequestObject.missingParams.push(element.name);
+        }
+        else{
+        	switch(element.type){
+        		case "int":
+        			mapRequestObject[element.name] = parseInt(requestQuery[element.name]);
+        			break;
+    			case "array":
+    				mapRequestObject[element.name] = requestQuery[element.name].split(',');
+					break;
+				default:
+					mapRequestObject[element.name] = requestQuery[element.name];
+        	}
+            
+        }
+    })
+    return mapRequestObject;
+}
 
-function keysToLowerCase(obj){
+function keyAndValueToLowerCase(obj){
     Object.keys(obj).forEach(function (key) {
         var k = key.toLowerCase();
-
         if (k !== key) {
             obj[k] = obj[key];
             delete obj[key];
         }
     });
-    return (obj);
+    for(value in obj){
+    	obj[value] = obj[value].toLowerCase();
+    }
+    return obj;
+}
+
+function extend(obj, src) {
+    for (var key in src) {
+        if (src.hasOwnProperty(key)) obj[key] = src[key];
+    }
+    return obj;
 }

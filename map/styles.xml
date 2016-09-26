@@ -10,7 +10,43 @@
         <Rule>
                 <TextSymbolizer size="14" fill="black" face-name="Decalotype Bold" halo-fill="#DFDBE3" halo-radius="1" wrap-width="20">[NAME]</TextSymbolizer>
         </Rule>
+    </Style>
 
+    <Style name="reefs_default">
+        <Rule>
+            <PolygonSymbolizer fill="#cc00cc" fill-opacity=".25"/>
+            <!-- <LineSymbolizer stroke="#800080" stroke-width=".5"/>          -->
+        </Rule>
+    </Style>
+
+    <Style name="ports_default">
+        <Rule>
+            <PointSymbolizer  file="img/port.png"/>          
+        </Rule>
+    </Style>
+
+    <Style name="airports_default">
+        <Rule>
+            <PointSymbolizer  file="img/airport.png"/>             
+        </Rule>
+    </Style>
+
+    <Style name="railroads_default">
+        <Rule>
+            <LineSymbolizer stroke="#660000" stroke-width="1.5" />           
+        </Rule>
+    </Style>
+
+    <Style name="steil_default">
+        <Rule>
+            <LineSymbolizer stroke="#00ff80" stroke-width="2" />           
+        </Rule>
+    </Style>
+
+    <Style name="rivers_default">
+        <Rule>
+            <LineSymbolizer stroke="#0000ff" stroke-width="3" />           
+        </Rule>
     </Style>
 
     <Style name="population">
@@ -61,7 +97,17 @@
       <PolygonSymbolizer fill="darkred"/>
       <LineSymbolizer stroke="black" stroke-width=".7"/>
      </Rule>
-
    </Style>
 
+    <Style name="parks_default">
+        <Rule>
+            <LineSymbolizer stroke="black" stroke-width="1" />           
+        </Rule>
+        <Rule>
+          <PolygonSymbolizer fill="#c7e9b4"/>
+        </Rule>
+        <Rule>
+          <!--<TextSymbolizer size="14" fill="black" face-name="Decalotype Bold" halo-fill="#DFDBE3" halo-radius="1" wrap-width="20">[name]</TextSymbolizer>-->
+        </Rule>
+    </Style>
 </Map>
