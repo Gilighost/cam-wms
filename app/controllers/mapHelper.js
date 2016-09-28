@@ -76,16 +76,25 @@ function createMapImage(mapReq, callback){
     })
 }
 
+//TODO: fully implement request options
 function getFeatureInfo(mapReq, callback){
     createMap(mapReq, function(createMapError, map){
         if(createMapError){
             callback(createMapError);
         }
-        else{
-            map.queryMapPoint(55, 130, {layer: 0}, function(err, results) {
-                if (err) throw err;
+        else{            
+            map.queryMapPoint(mapReq.i, mapReq.j, {layer: 0}, function(err, results) {
+                if (err) throw err; //TODO: build xml error for this
 
-                callback(createMapError, results);
+                var fs = results[0].featureset; // assuming you're just grabbing the first object in the array
+                var attributes = [];
+                var feature;
+
+                // grab all of the attributes and push to a temporary array
+                while ((feature = fs.next())) {
+                  attributes.push(feature.attributes());
+                }
+                callback(null, attributes);
             });
         }
     });

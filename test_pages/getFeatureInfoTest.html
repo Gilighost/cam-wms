@@ -1,0 +1,57 @@
+<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+<button id="switch" onclick="switchYOrientation()">Switch</button>
+<div id="orientation">j from top</div>
+<div id="position"></div>
+<div >
+    <div>
+      <a id="test">
+  		<img id="img" class="demo-box" style="border: 1pt solid black" src="http://45.55.89.43:4326/wms?service=wms&request=getmap&layers=ports&styles=&format=png&height=500&width=500&bbox=-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644&crs=epsg:3857&version=1.3.0" />
+      </a>
+    </div>
+    <div id="result">    	
+    </div>    
+</div>
+
+<script type="text/javascript">
+var yFromTop = true;
+function switchYOrientation(){
+	yFromTop = !yFromTop;
+	$("#orientation").html("j from " + (yFromTop ? "top" : "bottom"))
+}
+$(document).ready(function(){	
+
+	$("#test").click(function(e) {
+	  	var offset_t = $(this).offset().top - $(window).scrollTop();
+    	var offset_l = $(this).offset().left - $(window).scrollLeft();
+
+    	var i = Math.round( (e.clientX - e.offsetX?(e.offsetX):e.pageX) );
+    	//var j = Math.round( $("#img").height() - (e.clientY - e.offsetY?(e.offsetY):e.pageY) );
+		var j = Math.round( (yFromTop ? (e.clientY - e.offsetY?(e.offsetY):e.pageY) 
+			: ( $("#img").height() - (e.clientY - e.offsetY?(e.offsetY):e.pageY))));
+    	$("#position").html("<div>i: " + i + "</div><div>j: " + j +"</div>");
+	  	console.log(i+' : '+j);
+
+	  	var reqObj = {
+	  		version: "1.3.0",
+	  		service: "wms",
+	  		request: "getfeatureinfo",
+	  		layers: "ports",
+	  		styles: "",
+	  		format: "png",
+	  		height: 500,
+	  		width: 500,
+	  		bbox: "-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644",
+	  		crs: "epsg:3857",
+	  		query_layers: "",
+	  		info_format: "",
+	  		i: i,
+	  		j: j
+	  	}
+
+	  	$.get( "wms", reqObj).done(function(data) {
+		  $( "#result" ).html( JSON.stringify(data) );
+		  console.log(JSON.stringify(data));
+		});
+	});
+});
+</script>

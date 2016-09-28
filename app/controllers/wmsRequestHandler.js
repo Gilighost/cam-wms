@@ -13,7 +13,6 @@ http://45.55.89.43:4326/wms?service=wms&request=getfeatureinfo&layers=world_merc
 module.exports =
 function(req, res) {
     validateRequest(req, function(error, mapReqObj){
-    	console.log(mapReqObj);
     	if(error){
     		console.log("Error handling request...")
     		sendXML(res, error);
