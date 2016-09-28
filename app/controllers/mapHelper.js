@@ -63,7 +63,7 @@ function createMapImage(mapReq, callback){
         else{
             var im = new mapnik.Image(mapReq.width, mapReq.height);
             map.render(im, function(err,im) {
-                if (err) throw err;
+                if (err) throw err; //TODO: build xml error for this
 
                 mapReq.format = mapReq.format.replace('image/', '');
 
@@ -76,28 +76,35 @@ function createMapImage(mapReq, callback){
     })
 }
 
-//TODO: fully implement request options
 function getFeatureInfo(mapReq, callback){
-    createMap(mapReq, function(createMapError, map){
-        if(createMapError){
-            callback(createMapError);
-        }
-        else{            
-            map.queryMapPoint(mapReq.i, mapReq.j, {layer: 0}, function(err, results) {
-                if (err) throw err; //TODO: build xml error for this
+	var getFeatureInfoError = validateMapQuery(mapReq);
+	if(!getFeatureInfoError){
+	    createMap(mapReq, function(createMapError, map){
+	        if(createMapError){
+	            callback(createMapError);
+	        }
+	        else{            
+	            map.queryMapPoint(mapReq.i, mapReq.j, {}, function(err, results) {
+	                if (err) throw err; //TODO: build xml error for this
 
-                var fs = results[0].featureset; // assuming you're just grabbing the first object in the array
-                var attributes = [];
-                var feature;
-
-                // grab all of the attributes and push to a temporary array
-                while ((feature = fs.next())) {
-                  attributes.push(feature.attributes());
-                }
-                callback(null, attributes);
-            });
-        }
-    });
+	                console.log(results)
+	                var attributes = [];
+	                for(var resultsIndex = 0; resultsIndex < results.length; ++resultsIndex){
+	                	if(mapReq.query_layers.indexOf(results[resultsIndex].layer) != -1){
+			                var fs = results[resultsIndex].featureset; // assuming you're just grabbing the first object in the array		                
+			                var feature;
+		                	while ((feature = fs.next())) {// grab all of the attributes and push to a temporary array
+			                  attributes.push(feature.attributes());
+			                }
+		            	}
+	                }         
+	                callback(null, attributes);
+	            });
+	        }
+	    });
+	} else {
+		callback(getFeatureInfoError)
+	}
 }
 
 function bboxIsValid(bbox){
@@ -117,6 +124,34 @@ function bboxIsValid(bbox){
     else{
         return false;
     }
+}
+
+function validateMapQuery(mapReq){
+	//check query_layers
+	if(mapReq.query_layers[0] == ''){
+		return 'EmptyQueryLayers';
+	}
+	for(var layer in mapReq.query_layers){
+		if(mapReq.layers.indexOf(mapReq.query_layers[layer]) == -1){
+			return 'InvalidQueryLayers';
+		}		
+	}
+
+	//check info_format
+	if(mapReq.info_format == ''){
+		return 'EmptyInfoFormat';
+	}
+	if(config.supportedInfoFormats.indexOf(mapReq.info_format) == -1){
+		return 'InvalidInfoFormat';
+	}
+
+	//check i, j coordinates
+	if(mapReq.i < 0 || mapReq.i < 0 || mapReq.i > mapReq.width || mapReq.j > mapReq.height)
+	{
+		return 'InvalidImageCoordinates';
+	}
+
+	return null;
 }
 
 module.exports = {

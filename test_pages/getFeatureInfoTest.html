@@ -1,24 +1,114 @@
 <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
-<button id="switch" onclick="switchYOrientation()">Switch</button>
-<div id="orientation">j from top</div>
-<div id="position"></div>
-<div >
+<div id="position">
+	<div>i:</div>
+	<div>j:</div>
+</div>
+<div style="display: inline-block; float: left;">
     <div>
       <a id="test">
-  		<img id="img" class="demo-box" style="border: 1pt solid black" src="http://45.55.89.43:4326/wms?service=wms&request=getmap&layers=ports&styles=&format=png&height=500&width=500&bbox=-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644&crs=epsg:3857&version=1.3.0" />
+  		<img id="img" class="demo-box" style="height: 500px; width: 500px; border: 1pt solid black" src="wms?service=wms&request=getmap&layers=railroads&styles=,&format=png&height=500&width=500&bbox=-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644&crs=epsg:3857&version=1.3.0" />
       </a>
-    </div>
-    <div id="result">    	
-    </div>    
+    </div>  
 </div>
-
+<div id="layers" style="display: inline-block; float: left;">
+   	<fieldset >
+      <legend style="color:blue;font-weight:bold;">Layers</legend>
+      <table>
+         <tr>
+			<input type="checkbox" class="layers" name="layerRivers" value="rivers">Rivers<br>					
+         </tr>
+         <tr>
+			<input type="checkbox" class="layers" name="layerRailroads" value="railroads" checked>Railroads<br>
+         </tr>
+         <tr>
+			<input type="checkbox" class="layers" name="layerPorts" value="ports">Ports<br>
+         </tr>
+         <tr>
+			<input type="checkbox" class="layers" name="layerAirports" value="airports">Airports<br>
+         </tr>  
+         <tr>
+			<input type="checkbox" class="layers" name="layerBorders" value="world_merc">Borders<br>
+         </tr>  
+      </table>
+   	</fieldset>
+  	<fieldset >
+      <legend style="color:blue;font-weight:bold;">Query Layers</legend>
+      <table>
+         <tr>
+			<input type="checkbox" class="queryLayers" name="queryRivers" value="rivers">Rivers<br>					
+         </tr>
+         <tr>
+			<input type="checkbox" class="queryLayers" name="queryRailroads" value="railroads" checked>Railroads<br>
+         </tr>
+         <tr>
+			<input type="checkbox" class="queryLayers" name="queryPorts" value="ports">Ports<br>
+         </tr>
+         <tr>
+			<input type="checkbox" class="queryLayers" name="queryAirports" value="airports">Airports<br>
+         </tr>    
+         <tr>
+			<input type="checkbox" class="queryLayers" name="queryBorders" value="world_merc">Borders<br>
+         </tr>       
+      </table>
+   </fieldset>
+</div>
+<div id="result">    	
+</div>  
 <script type="text/javascript">
-var yFromTop = true;
-function switchYOrientation(){
-	yFromTop = !yFromTop;
-	$("#orientation").html("j from " + (yFromTop ? "top" : "bottom"))
+
+function serializeQuery(obj) {
+  var str = [];
+  for(var p in obj)
+    if (obj.hasOwnProperty(p)) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+  return str.join("&");
 }
+
+var queryLayers = ['railroads'];
+var layers = ['railroads'];
+var styles = ''
 $(document).ready(function(){	
+	$(".layers").change(function(e){
+		layers = [];
+		$(".layers").each(function(index, element){
+			if($(".layers")[index].checked){
+				layers.push($(this).val())
+			}
+		}).promise().done(function(){
+			
+			for(var i = 0; i < layers.length; ++i){
+				styles += ',';
+			}
+
+			var reqObj = {
+		  		version: "1.3.0",
+		  		service: "wms",
+		  		request: "getmap",
+		  		layers: layers.join(','),
+		  		styles: styles,
+		  		format: "png",
+		  		height: 500,
+		  		width: 500,
+		  		bbox: "-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644",
+		  		crs: "epsg:3857"
+		  	}
+
+		  	var url = "wms?" + serializeQuery(reqObj);
+		  	$("#img").attr('src', url);
+		});				
+	});
+
+	$(".queryLayers").change(function(e){
+		var newQueryLayers = []
+		$(".queryLayers").each(function(index, element){
+			if($(".queryLayers")[index].checked){
+				newQueryLayers.push($(this).val())
+			}
+		}).promise().done(function(){
+			queryLayers = newQueryLayers;
+		});			
+	});
 
 	$("#test").click(function(e) {
 	  	var offset_t = $(this).offset().top - $(window).scrollTop();
@@ -26,8 +116,7 @@ $(document).ready(function(){
 
     	var i = Math.round( (e.clientX - e.offsetX?(e.offsetX):e.pageX) );
     	//var j = Math.round( $("#img").height() - (e.clientY - e.offsetY?(e.offsetY):e.pageY) );
-		var j = Math.round( (yFromTop ? (e.clientY - e.offsetY?(e.offsetY):e.pageY) 
-			: ( $("#img").height() - (e.clientY - e.offsetY?(e.offsetY):e.pageY))));
+		var j = Math.round((e.clientY - e.offsetY?(e.offsetY):e.pageY));
     	$("#position").html("<div>i: " + i + "</div><div>j: " + j +"</div>");
 	  	console.log(i+' : '+j);
 
@@ -35,15 +124,15 @@ $(document).ready(function(){
 	  		version: "1.3.0",
 	  		service: "wms",
 	  		request: "getfeatureinfo",
-	  		layers: "ports",
-	  		styles: "",
+	  		layers: layers.join(','),
+	  		styles: styles,
 	  		format: "png",
 	  		height: 500,
 	  		width: 500,
 	  		bbox: "-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644",
 	  		crs: "epsg:3857",
-	  		query_layers: "",
-	  		info_format: "",
+	  		query_layers: queryLayers.join(','),
+	  		info_format: "json",
 	  		i: i,
 	  		j: j
 	  	}

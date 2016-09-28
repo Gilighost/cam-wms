@@ -24,7 +24,13 @@ const ERROR_CODES = {
 	InvalidUpdateSequence: "Value of (optional) UpdateSequence parameter in GetCapabilities request is greater than current value of service metadata update sequence number.",
 	MissingDimensionValue: "Request does not include a sample dimension value, and the server did not declare a default value for that dimension.",
 	InvalidDimensionValue: "Request contains an invalid sample dimension value.",
-	OperationNotSupported: "Request is for an optional operation that is not supported by the server. "
+	OperationNotSupported: "Request is for an optional operation that is not supported by the server. ",
+
+	EmptyQueryLayers: "Parameter 'QUERY_LAYERS' cannot be empty.",
+	InvalidQueryLayers: "Requested layer in 'QUERY_LAYERS' is not in 'LAYERS' parameter.",
+	EmptyInfoFormat: "Parameter 'INFO_FORMAT' cannot be empty.",
+	InvalidInfoFormat: "Requested 'INFO_FORMAT' is not offered by the server.",
+	InvalidImageCoordinates: "Requested I, J pixel coordinates are outside of queried map."
 };
 
 module.exports.buildServiceExceptionReportForMissingParams = function(missingParams){
@@ -43,13 +49,19 @@ module.exports.buildServiceExceptionReportForMissingParams = function(missingPar
 	return ServiceExceptionReport.end({pretty: true});
 }
 
-module.exports.buildServiceExceptionReportForError = function(errorCode){
+//message param is optional, will only be used if errorCode is not already defined in ERROR_CODES
+module.exports.buildServiceExceptionReportForError = function(errorCode, message){
 	var ServiceExceptionReport = xmlbuilder.create('ServiceExceptionReport')
-        .att('xmlns', "http://www.opengis.net/ogc")
-        .att( 'xmlns:xsi', "http://www.w3.org/2001/XMLSchema-instance")
-        .att('version', "1.3.0")
-        .att('xsi:schemaLocation', "http://www.opengis.net/ogc http://schemas.opengis.net/wms/1.3.0/exceptions_1_3_0.xsd");
+	        .att('xmlns', "http://www.opengis.net/ogc")
+	        .att( 'xmlns:xsi', "http://www.w3.org/2001/XMLSchema-instance")
+	        .att('version', "1.3.0")
+	        .att('xsi:schemaLocation', "http://www.opengis.net/ogc http://schemas.opengis.net/wms/1.3.0/exceptions_1_3_0.xsd");
 
-   	ServiceExceptionReport.ele('ServiceException', {'code': errorCode}, ERROR_CODES[errorCode])
+	if(Object.keys(ERROR_CODES).indexOf(errorCode) != -1){
+		ServiceExceptionReport.ele('ServiceException', {'code': errorCode}, ERROR_CODES[errorCode]);
+    } else{
+		ServiceExceptionReport.ele('ServiceException', {'code': errorCode}, message);
+    }
+   	
    	return ServiceExceptionReport.end({pretty: true});
 }
