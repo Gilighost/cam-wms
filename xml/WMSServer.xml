@@ -22,7 +22,6 @@
   <Capability>
     <Request>
       <GetCapabilities>
-        <Format>application/vnd.ogc.wms_xml</Format>
         <Format>text/xml</Format>
         <DCPType>
           <HTTP>
@@ -47,13 +46,8 @@
           </HTTP>
         </DCPType>
       </GetMap>
-      <!--<GetFeatureInfo>
-        <Format>application/vnd.esri.wms_raw_xml</Format>
-        <Format>application/vnd.esri.wms_featureinfo_xml</Format>
-        <Format>application/vnd.ogc.wms_xml</Format>
-        <Format>text/xml</Format>
-        <Format>text/html</Format>
-        <Format>text/plain</Format>
+      <GetFeatureInfo>
+        <Format>application/json</Format>
         <DCPType>
           <HTTP>
             <Get>
@@ -61,11 +55,10 @@
             </Get>
           </HTTP>
         </DCPType>
-      </GetFeatureInfo>-->
+      </GetFeatureInfo>
     </Request>
     <Exception>
       <Format>text/xml</Format>
-      <Format>XML</Format>
     </Exception>
     <Layer>
       <Name>world_merc</Name>
@@ -99,6 +92,66 @@
       <Style>
         <Name>parks_default</Name>
         <Title>parks_default</Title>
+      </Style>
+    </Layer>
+    <Layer>
+      <Name>reefs</Name>
+      <Title>reefs</Title>
+      <CRS>EPSG:3857</CRS>
+      <CRS>EPSG:4326</CRS>
+      <Style>
+        <Name>reefs_default</Name>
+        <Title>reefs_default</Title>
+      </Style>
+    </Layer>
+    <Layer>
+      <Name>ports</Name>
+      <Title>ports</Title>
+      <CRS>EPSG:3857</CRS>
+      <CRS>EPSG:4326</CRS>
+      <Style>
+        <Name>ports_default</Name>
+        <Title>ports_default</Title>
+      </Style>
+    </Layer>
+    <Layer>
+      <Name>airports</Name>
+      <Title>airports</Title>
+      <CRS>EPSG:3857</CRS>
+      <CRS>EPSG:4326</CRS>
+      <Style>
+        <Name>airports_default</Name>
+        <Title>airports_default</Title>
+      </Style>
+    </Layer>
+    <Layer>
+      <Name>railroads</Name>
+      <Title>railroads</Title>
+      <CRS>EPSG:3857</CRS>
+      <CRS>EPSG:4326</CRS>
+      <Style>
+        <Name>railroads_default</Name>
+        <Title>railroads_default</Title>
+      </Style>
+    </Layer>
+    <Layer>
+      <Name>rivers</Name>
+      <Title>rivers</Title>
+      <CRS>EPSG:3857</CRS>
+      <CRS>EPSG:4326</CRS>
+      <Style>
+        <Name>rivers_default</Name>
+        <Title>rivers_default</Title>
+      </Style>
+    </Layer>
+    <Layer>
+      <Name>steil_run</Name>
+      <Title>steil_run</Title>
+      <CRS>EPSG:3857</CRS>
+      <CRS>EPSG:4326</CRS>
+      <Style>
+        <Name>steil_default</Name>
+        <Title>steil_default</Title>
       </Style>
     </Layer>
   </Capability>
