@@ -3,7 +3,7 @@
   <Service>
     <Name>WMS</Name>
     <Title>Cam's WMS</Title>
-    <Abstract>WMS</Abstract>
+    <Abstract>A Web Map Server created and maintained by Cameron LaFerney. Created to learn more about GIS.</Abstract>
     <KeywordList>
       <Keyword>mapinfo</Keyword>
       <Keyword>geographic</Keyword>
@@ -16,8 +16,8 @@
       </ContactPersonPrimary>
       <ContactElectronicMailAddress>helloworld@cameronlaferney.me</ContactElectronicMailAddress>
     </ContactInformation>
-    <Fees>None</Fees>
-    <AccessConstraints>None</AccessConstraints>
+    <Fees>none</Fees>
+    <AccessConstraints>none</AccessConstraints>
   </Service>
   <Capability>
     <Request>
@@ -60,7 +60,7 @@
     <Exception>
       <Format>text/xml</Format>
     </Exception>
-    <Layer>
+    <Layer queryable="1">
       <Name>world_merc</Name>
       <Title>world_merc</Title>
       <CRS>EPSG:3857</CRS>
@@ -70,7 +70,7 @@
         <Title>default</Title>
       </Style>
     </Layer>
-    <Layer>
+    <Layer queryable="1">
       <Name>world_population</Name>
       <Title>world_population</Title>
       <CRS>EPSG:3857</CRS>
@@ -83,8 +83,19 @@
         <Name>population</Name>
         <Title>population</Title>
       </Style>
+      <Attribution>
+        <Title>Natural Earth</Title>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple"
+         xlink:href="http://www.naturalearthdata.com/" />
+        <LogoURL width="405" height="85">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
+           xlink:type="simple"
+           xlink:href="http://www.naturalearthdata.com/wp-content/themes/NEV/images/nev_logo.png" />
+        </LogoURL>
+      </Attribution>
     </Layer>
-    <Layer>
+    <Layer queryable="1">
       <Name>national_parks</Name>
       <Title>national_parks</Title>
       <CRS>EPSG:3857</CRS>
@@ -93,8 +104,19 @@
         <Name>parks_default</Name>
         <Title>parks_default</Title>
       </Style>
+      <Attribution>
+        <Title>Natural Earth</Title>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple"
+         xlink:href="http://www.naturalearthdata.com/" />
+        <LogoURL width="405" height="85">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
+           xlink:type="simple"
+           xlink:href="http://www.naturalearthdata.com/wp-content/themes/NEV/images/nev_logo.png" />
+        </LogoURL>
+      </Attribution>
     </Layer>
-    <Layer>
+    <Layer queryable="1">
       <Name>reefs</Name>
       <Title>reefs</Title>
       <CRS>EPSG:3857</CRS>
@@ -104,7 +126,7 @@
         <Title>reefs_default</Title>
       </Style>
     </Layer>
-    <Layer>
+    <Layer queryable="1">
       <Name>ports</Name>
       <Title>ports</Title>
       <CRS>EPSG:3857</CRS>
@@ -113,8 +135,19 @@
         <Name>ports_default</Name>
         <Title>ports_default</Title>
       </Style>
+      <Attribution>
+        <Title>Natural Earth</Title>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple"
+         xlink:href="http://www.naturalearthdata.com/" />
+        <LogoURL width="405" height="85">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
+           xlink:type="simple"
+           xlink:href="http://www.naturalearthdata.com/wp-content/themes/NEV/images/nev_logo.png" />
+        </LogoURL>
+      </Attribution>
     </Layer>
-    <Layer>
+    <Layer queryable="1">
       <Name>airports</Name>
       <Title>airports</Title>
       <CRS>EPSG:3857</CRS>
@@ -123,8 +156,19 @@
         <Name>airports_default</Name>
         <Title>airports_default</Title>
       </Style>
+      <Attribution>
+        <Title>Natural Earth</Title>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple"
+         xlink:href="http://www.naturalearthdata.com/" />
+        <LogoURL width="405" height="85">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
+           xlink:type="simple"
+           xlink:href="http://www.naturalearthdata.com/wp-content/themes/NEV/images/nev_logo.png" />
+        </LogoURL>
+      </Attribution>
     </Layer>
-    <Layer>
+    <Layer queryable="1">
       <Name>railroads</Name>
       <Title>railroads</Title>
       <CRS>EPSG:3857</CRS>
@@ -133,8 +177,19 @@
         <Name>railroads_default</Name>
         <Title>railroads_default</Title>
       </Style>
+      <Attribution>
+        <Title>Natural Earth</Title>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple"
+         xlink:href="http://www.naturalearthdata.com/" />
+        <LogoURL width="405" height="85">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
+           xlink:type="simple"
+           xlink:href="http://www.naturalearthdata.com/wp-content/themes/NEV/images/nev_logo.png" />
+        </LogoURL>
+      </Attribution>
     </Layer>
-    <Layer>
+    <Layer queryable="1">
       <Name>rivers</Name>
       <Title>rivers</Title>
       <CRS>EPSG:3857</CRS>
@@ -143,8 +198,19 @@
         <Name>rivers_default</Name>
         <Title>rivers_default</Title>
       </Style>
+      <Attribution>
+        <Title>Natural Earth</Title>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple"
+         xlink:href="http://www.naturalearthdata.com/" />
+        <LogoURL width="405" height="85">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
+           xlink:type="simple"
+           xlink:href="http://www.naturalearthdata.com/wp-content/themes/NEV/images/nev_logo.png" />
+        </LogoURL>
+      </Attribution>
     </Layer>
-    <Layer>
+    <Layer queryable="1">
       <Name>steil_run</Name>
       <Title>steil_run</Title>
       <CRS>EPSG:3857</CRS>
