@@ -73,16 +73,6 @@ exports.railroads = {
     availableStyles: ['railroads_default']
 }
 
-exports.railroads = {
-    name: 'railroads',
-    srs: '+init=epsg:4326',
-    datasource: {
-        type: 'shape',
-        file: config.geodataDirectory + '/railroads/ne_10m_railroads.shp'
-    },
-    availableStyles: ['railroads_default']
-}
-
 exports.steil_run = {
     name: 'steil_run',
     srs: '+init=epsg:4326',
