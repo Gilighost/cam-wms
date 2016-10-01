@@ -18,6 +18,7 @@ function(req, res) {
     		sendXML(res, error);
     	}
     	else{
+            res.set("Access-Control-Allow-Origin", "http://45.55.89.43:7765")
 			switch(mapReqObj.request){
 		       	case 'getcapabilities':
 		        	getCapabilitiesHandler(mapReqObj, res)

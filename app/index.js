@@ -21,5 +21,13 @@ app.use(morgan(config.logLevel));
 // Routes
 app.use('/', require('./routes'));
 
+//for test files & their resources
+app.use(express.static('./test_pages'));
+
+// For everything else
+app.use(function(req, res, next) {
+  res.status(404).send("ERROR: 404");
+});
+
 // Export app
 module.exports = app;
