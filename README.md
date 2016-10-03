@@ -26,6 +26,7 @@ To see the full Implementation Specification see the [OpenGIS® Web Map Server I
 #### TODO:
 * Allow more output formats for:
   * Exceptions
+  * GetCapabilities
   * GetFeatureInfo
 * Implement more optional parameters
 * Allow CartoCSS layer styling
