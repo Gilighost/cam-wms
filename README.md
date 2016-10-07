@@ -29,4 +29,5 @@ To see the full Implementation Specification see the [OpenGIS® Web Map Server I
   * GetCapabilities
   * GetFeatureInfo
 * Implement more optional parameters
+* Support more SRSs
 * Allow CartoCSS layer styling
