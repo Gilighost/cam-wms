@@ -1,6 +1,6 @@
 # cam-wms
 
-This is a Web Map Server I built with NodeJS.
+This is a Web Map Server I built with Node.js.
 
 It uses:
 * [Express](https://github.com/expressjs/express)
