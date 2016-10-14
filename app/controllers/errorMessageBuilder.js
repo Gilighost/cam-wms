@@ -24,7 +24,7 @@ const ERROR_CODES = {
 	InvalidUpdateSequence: "Value of (optional) UpdateSequence parameter in GetCapabilities request is greater than current value of service metadata update sequence number.",
 	MissingDimensionValue: "Request does not include a sample dimension value, and the server did not declare a default value for that dimension.",
 	InvalidDimensionValue: "Request contains an invalid sample dimension value.",
-	OperationNotSupported: "Request is for an optional operation that is not supported by the server. ",
+	OperationNotSupported: "Request is for an optional operation that is not supported by the server.",
 
 	EmptyQueryLayers: "Parameter 'QUERY_LAYERS' cannot be empty.",
 	InvalidQueryLayers: "Requested layer in 'QUERY_LAYERS' is not in 'LAYERS' parameter.",

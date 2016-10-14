@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Instamap</title>
+<link rel="shortcut icon" href="./img/imgmarker.png">
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4-src.js"></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700" rel="stylesheet">
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+  .result { font-family:  'PT Serif', serif}
+</style>
+</head>
+<body>
+
+
+<div id='map'></div>
+
+<script>
+  L.mapbox.accessToken = 'pk.eyJ1IjoiY2xhZmVybmV5IiwiYSI6ImI4YTYxODk3MTJmYWY0OWU3MTY1NTU1MDJkN2M5OWQ4In0.q8BO7AkBw7tEh5UKyL8v2A';
+  var map = L.map('map').setView([30, -95], 3);
+
+  map.options.maxZoom = 18;
+  map.options.minZoom = 2;
+
+  // Add tiles from Mapbox Style API (https://www.mapbox.com/developers/api/styles/)
+  // Tiles are 512x512 pixels and are offset by 1 zoom level
+  var tile_layer = L.tileLayer(
+      'https://api.mapbox.com/styles/v1/mapbox/outdoors-v9/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
+          tileSize: 512,
+          zoomOffset: -1,
+          attribution: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a>'
+      }).addTo(map);
+
+  var wmsOptions = { layers: 'instamap', styles: '', format: 'image/png' };
+  L.tileLayer.wms('WMS?', wmsOptions).addTo(map);
+
+  var map_default_style = 'https://api.mapbox.com/styles/v1/mapbox/outdoors-v9/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken
+  var map_satellite_style = 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken
+
+
+var satelliteButton = L.Control.extend({
+  options: {
+    position: 'bottomleft'
+    //control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
+  },
+
+  onAdd: function (map) {
+      var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+      container.style.backgroundColor = 'white';
+      container.style.backgroundImage = 'url(./img/satellite.png)';
+      container.style.width = '50px';
+      container.style.height = '50px';
+      container.onclick = function(){
+        this.satellite = !this.satellite;
+        if(this.satellite){
+          tile_layer.setUrl(map_satellite_style);
+          container.style.backgroundImage = 'url(./img/paintbrush.png)';
+        }
+        else{
+            tile_layer.setUrl(map_default_style);
+            container.style.backgroundImage = 'url(./img/satellite.png)';
+        }
+      }
+      return container;
+    },
+    satellite: false
+});
+
+map.addControl(new satelliteButton());
+
+function onMapClick(e) {
+  if(map.getZoom() > 3){
+    var bounds = map.getBounds();
+    var southwestBounds3857 = proj4(proj4.defs('EPSG:4326'), proj4.defs('EPSG:3857'), [bounds._southWest.lng, bounds._southWest.lat]);
+    var northeastBounds3857 = proj4(proj4.defs('EPSG:4326'), proj4.defs('EPSG:3857'), [bounds._northEast.lng, bounds._northEast.lat]);
+    var bounds3857 = southwestBounds3857.concat(northeastBounds3857);
+    var boundstring = bounds3857.join(",");
+
+    getFeatureRequestParams = {
+      version: "1.3.0",
+      service: "wms",
+      request: "getfeatureinfo",
+      layers: "instamap",
+      styles: "",
+      format: "png",
+      height: map.getSize().y,
+      width: map.getSize().x,
+      bbox: boundstring,
+      crs: "epsg:3857",
+      query_layers: "instamap",
+      info_format: "json",
+      i: e.containerPoint.x,
+      j: e.containerPoint.y
+    }
+
+    
+
+    $.get( "http://45.55.89.43:4326/WMS", getFeatureRequestParams).done(function(data) {
+      var firstResult = data[0];
+      if(firstResult){
+        var location = {lat: firstResult.lat, lng: firstResult.long}
+        var popup = L.popup().setLatLng(location);
+        popup.setContent("<div class='result' style='width: 200px;'><h3 style='text-decoration: underline'>" + firstResult["username"] + "</h3><div style='margin-bottom: 10px'><img style='height: 200px; width: 200px; margin: auto; display: block;' src=" + firstResult["base_64_encoded_img"] + "></img></div><p>" + firstResult["description"] + "</p></div>").openOn(map);
+      }
+    }); 
+
+  }
+}
+
+map.on('click', onMapClick);
+
+</script>
+
+
+</body>
+</html>

@@ -12,6 +12,18 @@
         </Rule>
     </Style>
 
+    <Style name="blue_lines">
+        <Rule>
+            <LineSymbolizer stroke="blue" stroke-width="1" />           
+        </Rule>
+    </Style>
+
+    <Style name="red_lines">
+        <Rule>
+            <LineSymbolizer stroke="red" stroke-width="1" />           
+        </Rule>
+    </Style>
+
     <Style name="reefs_default">
         <Rule>
             <PolygonSymbolizer fill="#cc00cc" fill-opacity=".25"/>
@@ -28,6 +40,12 @@
     <Style name="airports_default">
         <Rule>
             <PointSymbolizer  file="img/airport.png"/>             
+        </Rule>
+    </Style>
+
+    <Style name="instamap_default">
+        <Rule>
+            <PointSymbolizer  file="img/imgmarker.png"/>             
         </Rule>
     </Style>
 

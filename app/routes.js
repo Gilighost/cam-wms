@@ -21,6 +21,10 @@ router.get('/slippymap', function(req, res){
 	res.sendFile(path.join(__dirname + '/../test_pages/slippymap.html'));
 });
 
+router.get('/instamap', function(req, res){
+	res.sendFile(path.join(__dirname + '/../test_pages/instamap.html'));
+});
+
 router.get('/', function(req, res){res.send("ERROR: 404")});
 
 // Export
