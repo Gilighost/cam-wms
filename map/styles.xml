@@ -45,7 +45,7 @@
 
     <Style name="instamap_default">
         <Rule>
-            <PointSymbolizer  file="img/imgmarker.png"/>             
+            <PointSymbolizer file="img/imgmarker.png"/>             
         </Rule>
     </Style>
 
@@ -68,9 +68,6 @@
     </Style>
 
     <Style name="population">
-
-     <!-- Built from Seven Class sequential YIGnBu from www.colorbrewer.org -->
-     <!-- Quantile breaks originally from QGIS layer classification -->
      <Rule>
       <Filter>[POP_EST] &gt; -1 and [POP_EST] &lt; 15000</Filter>
       <PolygonSymbolizer fill="#c7e9b4"/>
