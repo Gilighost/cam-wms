@@ -1,10 +1,18 @@
-var mapnik = require("mapnik");
-var fs = require("fs");
-var config = require('../../config');
-var colors = require('colors')
-var WMSlayers = require(config.layers)
-var errorMessageBuilder = require('./errorMessageBuilder')
+/********************************************************************
+Contains logic used to interact with geographic data
 
+ Exports:
+    createMap
+    createMapLayer
+    createMapImage
+    bboxIsValid
+    getFeatureInfo
+ ********************************************************************/
+var mapnik      = require('mapnik'),
+    config      = require('../../config'),
+    WMSlayers   = require(config.layers);
+
+// register fonts and datasource plugins
 mapnik.registerFonts(config.fontDirectory, {recurse: true});
 mapnik.register_default_input_plugins();
 
@@ -45,6 +53,10 @@ function createMap(mapReq, callback){
     callback(createMapError, map);
 }
 
+//Creates a mapnik map layer using a given style
+//name - name of layer
+//style - name of style offered for layer
+//returns a Mapnik map layer
 function createMapLayer(name, style){
     var layerOptions = WMSlayers[name];
     var mapLayer = new mapnik.Layer(layerOptions.name, layerOptions.srs);
@@ -55,6 +67,9 @@ function createMapLayer(name, style){
     return mapLayer;
 }
 
+//Creates an image buffer using a map object
+//mapReq - map request object
+//callback - function that will handle errors and image buffer
 function createMapImage(mapReq, callback){    
     createMap(mapReq, function(createMapError, map){
         if(createMapError){
@@ -63,7 +78,7 @@ function createMapImage(mapReq, callback){
         else{
             var im = new mapnik.Image(mapReq.width, mapReq.height);
             map.render(im, function(err,im) {
-                if (err) throw err; //TODO: build xml error for this
+                if (err) throw err;
 
                 mapReq.format = mapReq.format.replace('image/', '');
 
@@ -76,6 +91,9 @@ function createMapImage(mapReq, callback){
     })
 }
 
+//Creates a feature set using a map object
+//mapReq - map request object
+//callback - function that will handle errors and array of features
 function getFeatureInfo(mapReq, callback){
 	var getFeatureInfoError = validateMapQuery(mapReq);
 	if(!getFeatureInfoError){
@@ -85,15 +103,15 @@ function getFeatureInfo(mapReq, callback){
 	        }
 	        else{            
 	            map.queryMapPoint(mapReq.i, mapReq.j, {}, function(err, results) {
-	                if (err) throw err; //TODO: build xml error for this
+	                if (err) throw err;
 
 	                console.log(results)
 	                var attributes = [];
 	                for(var resultsIndex = 0; resultsIndex < results.length; ++resultsIndex){
 	                	if(mapReq.query_layers.indexOf(results[resultsIndex].layer) != -1){
-			                var fs = results[resultsIndex].featureset; // assuming you're just grabbing the first object in the array		                
+			                var features = results[resultsIndex].featureset; // assuming you're just grabbing the first object in the array		                
 			                var feature;
-		                	while ((feature = fs.next())) {// grab all of the attributes and push to a temporary array
+		                	while ((feature = features.next())) {// grab all of the attributes and push to a temporary array
 			                  attributes.push(feature.attributes());
 			                }
 		            	}
@@ -107,6 +125,7 @@ function getFeatureInfo(mapReq, callback){
 	}
 }
 
+//makes sure the BBOX is logical
 function bboxIsValid(bbox){
     if(bbox.length == 4){
         try{
@@ -126,6 +145,7 @@ function bboxIsValid(bbox){
     }
 }
 
+//Returns error code if any parameters are invalid
 function validateMapQuery(mapReq){
 	//check query_layers
 	if(mapReq.query_layers[0] == ''){

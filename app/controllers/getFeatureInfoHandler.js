@@ -1,10 +1,11 @@
-var sendXML = require('./sendXML');
-var mapnik = require("mapnik");
-var mapHelper = require('./mapHelper')
-var fs = require("fs");
-var config = require('../../config');
-var colors = require('colors')
-var errorMessageBuilder = require('./errorMessageBuilder')
+/********************************************************************
+ Handles the getFeatureInfo request
+
+ Exports: handleGetFeatureInfoRequest (function)
+ ********************************************************************/
+var sendXML 			= require('./sendXML'),
+ 	mapHelper 			= require('./mapHelper'),
+ 	errorMessageBuilder = require('./errorMessageBuilder');
 
 function handleGetFeatureInfoRequest(mapReqObj, res){	
 	mapHelper.getFeatureInfo(mapReqObj, function(err, featureInfo){

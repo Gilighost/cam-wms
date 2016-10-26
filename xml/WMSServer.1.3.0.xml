@@ -65,6 +65,7 @@ http://schemas.opengis.net/wms/1.3.0/capabilities_1_2_0.xsd">
     <Exception>
       <Format>text/xml</Format>
     </Exception>
+
     <Layer queryable="1">
       <Name>instamap</Name>
       <Title>InstaMap</Title>
@@ -83,6 +84,7 @@ http://schemas.opengis.net/wms/1.3.0/capabilities_1_2_0.xsd">
       <BoundingBox CRS="EPSG:4326" minx="-94.202750" miny="35.24805" maxx="-91.718217" maxy="36.051206"/>
       <BoundingBox CRS="EPSG:3857" minx="-10486602.1613" miny="4197641.4502" maxx="-10210025.2129" maxy="4307669.52812"/> 
     </Layer>
+    
     <Layer queryable="1">
       <Name>world_merc</Name>
       <Title>World Merc</Title>

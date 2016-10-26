@@ -1,11 +1,17 @@
-var config = require('../../config'),
-    getCapabilitiesHandler = require('./getCapabilitiesHandler'),
-    getMapHandler = require('./getMapHandler'),
-    getFeatureInfoHandler = require('./getFeatureInfoHandler'),
-    errorMessageBuilder = require('./errorMessageBuilder'),
-    sendXML = require('./sendXML');
+/********************************************************************
+ Validates request, directs request to correct handler
+
+ Exports: function
+ ********************************************************************/
+var getCapabilitiesHandler  = require('./getCapabilitiesHandler'),
+    getMapHandler           = require('./getMapHandler'),
+    getFeatureInfoHandler   = require('./getFeatureInfoHandler'),
+    errorMessageBuilder     = require('./errorMessageBuilder'),
+    sendXML                 = require('./sendXML');
 
 /*
+TEST URLS
+http://45.55.89.43:4326/wms?service=wms&request=getcapabilities
 http://45.55.89.43:4326/wms?service=wms&request=getmap&layers=world_merc&styles=&format=png&height=500&width=500&bbox=-166.9921875,-168.3984375,166.9921875,168.3984375&crs=epsg:4326&version=1.3.0
 http://45.55.89.43:4326/wms?service=wms&request=getfeatureinfo&layers=world_merc&styles=&format=png&height=500&width=500&bbox=-166.9921875,-168.3984375,166.9921875,168.3984375&crs=epsg:4326&version=1.3.0&query_layers=&info_format=&i=&j=
 */
@@ -14,11 +20,9 @@ module.exports =
 function(req, res) {
     validateRequest(req, function(error, mapReqObj){
     	if(error){
-    		console.log("Error handling request...")
     		sendXML(res, error);
     	}
     	else{
-            res.set("Access-Control-Allow-Origin", "http://45.55.89.43:7765")
 			switch(mapReqObj.request){
 		       	case 'getcapabilities':
 		        	getCapabilitiesHandler(mapReqObj, res)
@@ -30,13 +34,13 @@ function(req, res) {
 				  	getFeatureInfoHandler(mapReqObj, res)
 		      		break;
 		      	default:
-		      		console.log('error: invalid request')
 		      		sendXML(res, errorMessageBuilder.invalidQueryFormat());
 	    	}
     	}    	
   	})
 }    
 
+//Object used to validate requests
 const REQUIRED_REQUEST_PARAMETERS = {
     base: [
     	{type: 'string', name: 'service'},
@@ -68,6 +72,10 @@ const REQUIRED_REQUEST_PARAMETERS = {
     ]
 }
 
+//makes sure request contains required parameters
+//callback function:
+//  param: error message for if error occurred(otherwise undefined)
+//  param: formatted request object
 function validateRequest(req, callback){
     var mapReqObj = {}
     var errorMessage = undefined;
@@ -101,6 +109,7 @@ function validateRequest(req, callback){
     }
 }
 
+//formats request object for next handler
 function getMapRequestObject(requestType, requestQuery){
     var mapRequestObject = {};
     mapRequestObject.missingParams = [];
@@ -122,13 +131,13 @@ function getMapRequestObject(requestType, requestQuery){
 					break;
 				default:
 					mapRequestObject[element.name] = requestQuery[element.name];
-        	}
-            
+        	}            
         }
-    })
+    });
     return mapRequestObject;
 }
 
+//converts object to contain only lowercase characters
 function keyAndValueToLowerCase(obj){
     Object.keys(obj).forEach(function (key) {
         var k = key.toLowerCase();
@@ -143,9 +152,11 @@ function keyAndValueToLowerCase(obj){
     return obj;
 }
 
-function extend(obj, src) {
-    for (var key in src) {
-        if (src.hasOwnProperty(key)) obj[key] = src[key];
+//Combine two Objects
+function extend(obj, src){
+    for (var key in src){
+        if (src.hasOwnProperty(key))
+            obj[key] = src[key];
     }
     return obj;
 }

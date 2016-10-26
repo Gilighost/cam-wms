@@ -6,13 +6,13 @@
 var config   = require('../config'),
     express  = require('express'),
     morgan   = require('morgan'),
-    parser   = require('body-parser'),
-    session  = require('express-session');
+    parser   = require('body-parser');
 
 // Create application
 var app = express();
 
 // Parse POST requests
+// For future, as this WMS does not currently support POST requests
 app.use(parser.urlencoded({ extended: false }));
 
 // Logging

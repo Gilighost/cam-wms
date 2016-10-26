@@ -7,6 +7,8 @@ It uses:
 * [Mapnik](https://github.com/mapnik/node-mapnik)
 * [XMLbuilder](https://github.com/oozcitak/xmlbuilder-js)
 
+In order to run the project you must download and install the Mapnik binaries from http://mapnik.org/pages/downloads.html
+
 ### What is a Web Map Server?
 >A Web Map Service (WMS) is a standard protocol for serving (over the Internet) georeferenced map images which a map server generates using data from a GIS database. The Open Geospatial Consortium developed the specification and first published it in 1999.
 

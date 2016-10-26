@@ -1,11 +1,11 @@
-var sendXML = require('./sendXML');
-var mapnik = require("mapnik");
-var mapHelper = require('./mapHelper')
-var fs = require("fs");
-var config = require('../../config');
-var colors = require('colors')
-//var WMSlayers = require(config.layers)
-var errorMessageBuilder = require('./errorMessageBuilder')
+/********************************************************************
+ Handles the getMap request
+
+ Exports: handleGetMapRequest (function)
+ ********************************************************************/
+var sendXML 			= require('./sendXML'),
+ 	mapHelper 			= require('./mapHelper'),
+ 	errorMessageBuilder = require('./errorMessageBuilder');
 
 function handleGetMapRequest(mapReqObj, res){	
 	mapHelper.createMapImage(mapReqObj, function(err, mapImg){
