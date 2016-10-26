@@ -101,7 +101,7 @@ function onMapClick(e) {
 
     
 
-    $.get( "http://45.55.89.43:4326/WMS", getFeatureRequestParams).done(function(data) {
+    $.get( "/WMS", getFeatureRequestParams).done(function(data) {
       var firstResult = data[0];
       if(firstResult){
         var location = {lat: firstResult.lat, lng: firstResult.long}

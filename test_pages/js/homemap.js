@@ -12,4 +12,4 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token='
 	}).addTo(mymap);
 
 var wmsOptions = { layers: 'national_parks' };
-L.tileLayer.wms('http://45.55.89.43:2468/WMS?', wmsOptions).addTo(mymap);
+L.tileLayer.wms('/WMS?', wmsOptions).addTo(mymap);

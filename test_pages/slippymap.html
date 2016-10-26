@@ -41,7 +41,7 @@
   var map_default_style = 'https://api.mapbox.com/styles/v1/mapbox/outdoors-v9/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken
   var map_satellite_style = 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken
 
-  var cam_wms_url = 'http://45.55.89.43:4326/WMS?'
+  var cam_wms_url = '/WMS?'
   var basemaps = {
 	  Railroads: L.tileLayer.wms(cam_wms_url, {
 	      layers: 'railroads',
@@ -137,7 +137,7 @@ function onMapClick(e) {
     .setContent("<div>Loading...</div>")
     .openOn(map);
 
-    $.get( "http://45.55.89.43:4326/WMS", getFeatureRequestParams).done(function(data) {
+    $.get( "/WMS", getFeatureRequestParams).done(function(data) {
       var firstResult = data[0];
       if(firstResult){
         popup.setContent("<div class='result' style='width: 200px'><h3 style='text-decoration: underline'>" + firstResult["NAME"] + "</h3></div>");    
