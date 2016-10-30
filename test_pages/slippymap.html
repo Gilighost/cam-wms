@@ -68,6 +68,11 @@
 	      format: 'image/png'
 	  }),
 
+    "Hilton Head Bike Ride": L.tileLayer.wms(cam_wms_url, {
+        layers: 'cam_bike',
+        format: 'image/png'
+    }),
+
     Rivers: L.tileLayer.wms(cam_wms_url, {
         layers: 'rivers',
         format: 'image/png'
@@ -140,7 +145,7 @@ function onMapClick(e) {
     $.get( "/WMS", getFeatureRequestParams).done(function(data) {
       var firstResult = data[0];
       if(firstResult){
-        popup.setContent("<div class='result' style='width: 200px'><h3 style='text-decoration: underline'>" + firstResult["NAME"] + "</h3></div>");    
+        popup.setContent("<div class='result' style='width: 200px'><h3 style='text-decoration: underline'>" + firstResult["NAME"] + "</h3></div>");
         $.each(firstResult, function(index, element){
           if(index != "NAME")
             $(".result").append("<div><strong>" + index + ": </strong>" + element + "</div>");
@@ -149,7 +154,7 @@ function onMapClick(e) {
          popup.setContent("No results <strong>&#9760;</strong>");
       }
 
-    }); 
+    });
 
   }
 }
