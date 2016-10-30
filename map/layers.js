@@ -80,7 +80,7 @@ exports.steil_run = {
         type: 'shape',
         file: config.geodataDirectory + '/steil_run/steil_run.shp'
     },
-    availableStyles: ['steil_default']
+    availableStyles: ['path_default']
 };
 
 exports.rivers = {
@@ -102,4 +102,13 @@ exports.instamap = {
     },
     availableStyles: ['instamap_default']
 };
-//http://www.srh.noaa.gov/ridge2/shapefiles/
+
+exports.cam_bike = {
+    name: 'cam_bike',
+    srs: '+init=epsg:4326',
+    datasource: {
+        type: 'geojson',
+        file: config.geodataDirectory + '/cam_bike/HiltonHeadBikeRide.json'
+    },
+    availableStyles: ['path_default']
+};

@@ -5,7 +5,7 @@
 
     <Style name="default">
         <Rule>
-            <LineSymbolizer stroke="black" stroke-width="1" />           
+            <LineSymbolizer stroke="black" stroke-width="1" />
         </Rule>
         <Rule>
                 <TextSymbolizer size="14" fill="black" face-name="Decalotype Bold" halo-fill="#DFDBE3" halo-radius="1" wrap-width="20">[NAME]</TextSymbolizer>
@@ -14,13 +14,13 @@
 
     <Style name="blue_lines">
         <Rule>
-            <LineSymbolizer stroke="blue" stroke-width="1" />           
+            <LineSymbolizer stroke="blue" stroke-width="1" />
         </Rule>
     </Style>
 
     <Style name="red_lines">
         <Rule>
-            <LineSymbolizer stroke="red" stroke-width="1" />           
+            <LineSymbolizer stroke="red" stroke-width="1" />
         </Rule>
     </Style>
 
@@ -33,37 +33,37 @@
 
     <Style name="ports_default">
         <Rule>
-            <PointSymbolizer  file="img/port.png"/>          
+            <PointSymbolizer  file="img/port.png"/>
         </Rule>
     </Style>
 
     <Style name="airports_default">
         <Rule>
-            <PointSymbolizer  file="img/airport.png"/>             
+            <PointSymbolizer  file="img/airport.png"/>
         </Rule>
     </Style>
 
     <Style name="instamap_default">
         <Rule>
-            <PointSymbolizer file="img/imgmarker.png"/>             
+            <PointSymbolizer file="img/imgmarker.png"/>
         </Rule>
     </Style>
 
     <Style name="railroads_default">
         <Rule>
-            <LineSymbolizer stroke="#660000" stroke-width="1.5" />           
+            <LineSymbolizer stroke="#660000" stroke-width="1.5" />
         </Rule>
     </Style>
 
-    <Style name="steil_default">
+    <Style name="path_default">
         <Rule>
-            <LineSymbolizer stroke="#00ff80" stroke-width="2" />           
+            <LineSymbolizer stroke="#00ff80" stroke-width="2" />
         </Rule>
     </Style>
 
     <Style name="rivers_default">
         <Rule>
-            <LineSymbolizer stroke="#0000ff" stroke-width="3" />           
+            <LineSymbolizer stroke="#0000ff" stroke-width="3" />
         </Rule>
     </Style>
 
@@ -106,7 +106,7 @@
      </Rule>
 
      <Rule>
-      <ElseFilter/> 
+      <ElseFilter/>
       <!-- This will catch all other values - in this case just India and China -->
       <!-- A dark red polygon fill and black outline is used here to highlight these two countries -->
       <PolygonSymbolizer fill="darkred"/>
@@ -116,7 +116,7 @@
 
     <Style name="parks_default">
         <Rule>
-            <LineSymbolizer stroke="black" stroke-width="1" />           
+            <LineSymbolizer stroke="black" stroke-width="1" />
         </Rule>
         <Rule>
           <PolygonSymbolizer fill="#c7e9b4"/>
