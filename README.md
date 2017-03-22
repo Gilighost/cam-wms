@@ -14,7 +14,7 @@ In order to run the project you must download and install the Mapnik binaries fr
 
 >-Wikipedia
 
-###This WMS supports these requests:
+### This WMS supports these requests:
 * GetCapabilities
   *   This operation requests metadata about the operations, services, and data (“capabilities”) that are offered by a WMS server.
 * GetMap
@@ -22,7 +22,7 @@ In order to run the project you must download and install the Mapnik binaries fr
 * GetFeatureInfo
   *   This operation requests the spatial and attribute data for the features at a given location on a map.
   
-###Implementation Specification
+### Implementation Specification
 To see the full Implementation Specification see the [OpenGIS® Web Map Server Implementation Specification](http://www.opengeospatial.org/standards/wms#downloads)
 
 #### TODO:
