@@ -10,10 +10,10 @@ var getCapabilitiesHandler  = require('./getCapabilitiesHandler'),
     sendXML                 = require('./sendXML');
 
 /*
-TEST URLS
-http://45.55.89.43:4326/wms?service=wms&request=getcapabilities
-http://45.55.89.43:4326/wms?service=wms&request=getmap&layers=world_merc&styles=&format=png&height=500&width=500&bbox=-166.9921875,-168.3984375,166.9921875,168.3984375&crs=epsg:4326&version=1.3.0
-http://45.55.89.43:4326/wms?service=wms&request=getfeatureinfo&layers=world_merc&styles=&format=png&height=500&width=500&bbox=-166.9921875,-168.3984375,166.9921875,168.3984375&crs=epsg:4326&version=1.3.0&query_layers=&info_format=&i=&j=
+TEST URLS:
+/wms?service=wms&request=getcapabilities
+/wms?service=wms&request=getmap&layers=world_merc&styles=&format=png&height=500&width=500&bbox=-166.9921875,-168.3984375,166.9921875,168.3984375&crs=epsg:4326&version=1.3.0
+/wms?service=wms&request=getfeatureinfo&layers=world_merc&styles=&format=png&height=500&width=500&bbox=-166.9921875,-168.3984375,166.9921875,168.3984375&crs=epsg:4326&version=1.3.0&query_layers=&info_format=&i=&j=
 */
 
 module.exports =
