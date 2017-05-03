@@ -19,10 +19,10 @@ TEST URLS:
 module.exports =
 function(req, res) {
     validateRequest(req, function(error, mapReqObj){
-    	if(error){
+    	if(error) {
     		sendXML(res, error);
     	}
-    	else{
+    	else {
 			switch(mapReqObj.request){
 		       	case 'getcapabilities':
 		        	getCapabilitiesHandler(mapReqObj, res)
