@@ -1,128 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE Map>
 <Map>
-    <!--STYLES-->
+	<!--STYLES-->
+	<Style name="default">
+		<Rule>
+			<LineSymbolizer stroke="black" stroke-width="1" />
+		</Rule>
+		<Rule>
+				<TextSymbolizer size="14" fill="black" face-name="Decalotype Bold" halo-fill="#DFDBE3" halo-radius="1" wrap-width="20">[NAME]</TextSymbolizer>
+		</Rule>
+	</Style>
 
-    <Style name="default">
-        <Rule>
-            <LineSymbolizer stroke="black" stroke-width="1" />
-        </Rule>
-        <Rule>
-                <TextSymbolizer size="14" fill="black" face-name="Decalotype Bold" halo-fill="#DFDBE3" halo-radius="1" wrap-width="20">[NAME]</TextSymbolizer>
-        </Rule>
-    </Style>
+	<Style name="blue_lines">
+		<Rule>
+			<LineSymbolizer stroke="blue" stroke-width="1" />
+		</Rule>
+	</Style>
 
-    <Style name="blue_lines">
-        <Rule>
-            <LineSymbolizer stroke="blue" stroke-width="1" />
-        </Rule>
-    </Style>
+	<Style name="red_lines">
+		<Rule>
+			<LineSymbolizer stroke="red" stroke-width="1" />
+		</Rule>
+	</Style>
 
-    <Style name="red_lines">
-        <Rule>
-            <LineSymbolizer stroke="red" stroke-width="1" />
-        </Rule>
-    </Style>
+	<Style name="reefs_default">
+		<Rule>
+			<PolygonSymbolizer fill="#cc00cc" fill-opacity=".25"/>
+			<!-- <LineSymbolizer stroke="#800080" stroke-width=".5"/>-->
+		</Rule>
+	</Style>
 
-    <Style name="reefs_default">
-        <Rule>
-            <PolygonSymbolizer fill="#cc00cc" fill-opacity=".25"/>
-            <!-- <LineSymbolizer stroke="#800080" stroke-width=".5"/>          -->
-        </Rule>
-    </Style>
+	<Style name="ports_default">
+		<Rule>
+			<PointSymbolizer  file="img/port.png"/>
+		</Rule>
+	</Style>
 
-    <Style name="ports_default">
-        <Rule>
-            <PointSymbolizer  file="img/port.png"/>
-        </Rule>
-    </Style>
+	<Style name="airports_default">
+		<Rule>
+			<PointSymbolizer  file="img/airport.png"/>
+		</Rule>
+	</Style>
 
-    <Style name="airports_default">
-        <Rule>
-            <PointSymbolizer  file="img/airport.png"/>
-        </Rule>
-    </Style>
+	<Style name="instamap_default">
+		<Rule>
+			<PointSymbolizer file="img/imgmarker.png"/>
+		</Rule>
+	</Style>
 
-    <Style name="instamap_default">
-        <Rule>
-            <PointSymbolizer file="img/imgmarker.png"/>
-        </Rule>
-    </Style>
+	<Style name="railroads_default">
+		<Rule>
+			<LineSymbolizer stroke="#660000" stroke-width="1.5" />
+		</Rule>
+	</Style>
 
-    <Style name="railroads_default">
-        <Rule>
-            <LineSymbolizer stroke="#660000" stroke-width="1.5" />
-        </Rule>
-    </Style>
+	<Style name="path_default">
+		<Rule>
+			<LineSymbolizer stroke="#00ff80" stroke-width="2" />
+		</Rule>
+	</Style>
 
-    <Style name="path_default">
-        <Rule>
-            <LineSymbolizer stroke="#00ff80" stroke-width="2" />
-        </Rule>
-    </Style>
+	<Style name="rivers_default">
+		<Rule>
+			<LineSymbolizer stroke="#0000ff" stroke-width="3" />
+		</Rule>
+	</Style>
 
-    <Style name="rivers_default">
-        <Rule>
-            <LineSymbolizer stroke="#0000ff" stroke-width="3" />
-        </Rule>
-    </Style>
+	<Style name="population">
+	 <Rule>
+	  <Filter>[POP_EST] &gt; -1 and [POP_EST] &lt; 15000</Filter>
+	  <PolygonSymbolizer fill="#c7e9b4"/>
+	  <LineSymbolizer stroke="black" stroke-width=".1"/>
+	 </Rule>
 
-    <Style name="population">
-     <Rule>
-      <Filter>[POP_EST] &gt; -1 and [POP_EST] &lt; 15000</Filter>
-      <PolygonSymbolizer fill="#c7e9b4"/>
-      <LineSymbolizer stroke="black" stroke-width=".1"/>
-     </Rule>
+	 <Rule>
+	  <Filter>[POP_EST] &gt;= 15000 and [POP_EST] &lt; 255000</Filter>
+	  <PolygonSymbolizer fill="#7fcdbb"/>
+	  <LineSymbolizer stroke="black" stroke-width=".1"/>
+	 </Rule>
 
-     <Rule>
-      <Filter>[POP_EST] &gt;= 15000 and [POP_EST] &lt; 255000</Filter>
-      <PolygonSymbolizer fill="#7fcdbb"/>
-      <LineSymbolizer stroke="black" stroke-width=".1"/>
-     </Rule>
+	 <Rule>
+	  <Filter>[POP_EST] &gt;= 255000 and [POP_EST] &lt; 1300000</Filter>
+	  <PolygonSymbolizer fill="#1d91c0"/>
+	 </Rule>
 
-     <Rule>
-      <Filter>[POP_EST] &gt;= 255000 and [POP_EST] &lt; 1300000</Filter>
-      <PolygonSymbolizer fill="#1d91c0"/>
-     </Rule>
+	 <Rule>
+	  <Filter>[POP_EST] &gt;= 1300000 and [POP_EST] &lt; 4320000</Filter>
+	  <PolygonSymbolizer fill="#41b6c3"/>
+	 </Rule>
 
-     <Rule>
-      <Filter>[POP_EST] &gt;= 1300000 and [POP_EST] &lt; 4320000</Filter>
-      <PolygonSymbolizer fill="#41b6c3"/>
-     </Rule>
+	 <Rule>
+	  <Filter>[POP_EST] &gt;= 4320000 and [POP_EST] &lt; 9450000</Filter>
+	  <PolygonSymbolizer fill="#225ea8"/>
+	 </Rule>
 
-     <Rule>
-      <Filter>[POP_EST] &gt;= 4320000 and [POP_EST] &lt; 9450000</Filter>
-      <PolygonSymbolizer fill="#225ea8"/>
-     </Rule>
+	 <Rule>
+	  <Filter>[POP_EST] &gt;= 9450000 and [POP_EST] &lt; 25650000</Filter>
+	  <PolygonSymbolizer fill="#225ea8"/>
+	 </Rule>
 
-     <Rule>
-      <Filter>[POP_EST] &gt;= 9450000 and [POP_EST] &lt; 25650000</Filter>
-      <PolygonSymbolizer fill="#225ea8"/>
-     </Rule>
+	 <Rule>
+	  <Filter>[POP_EST] &gt;= 25650000 and [POP_EST] &lt; 1134000000</Filter>
+	  <PolygonSymbolizer fill="#122F7F"/>
+	 </Rule>
 
-     <Rule>
-      <Filter>[POP_EST] &gt;= 25650000 and [POP_EST] &lt; 1134000000</Filter>
-      <PolygonSymbolizer fill="#122F7F"/>
-     </Rule>
-
-     <Rule>
-      <ElseFilter/>
-      <!-- This will catch all other values - in this case just India and China -->
-      <!-- A dark red polygon fill and black outline is used here to highlight these two countries -->
-      <PolygonSymbolizer fill="darkred"/>
-      <LineSymbolizer stroke="black" stroke-width=".7"/>
-     </Rule>
+	 <Rule>
+	  <ElseFilter/>
+	  <!-- This will catch all other values - in this case just India and China -->
+	  <!-- A dark red polygon fill and black outline is used here to highlight these two countries -->
+	  <PolygonSymbolizer fill="darkred"/>
+	  <LineSymbolizer stroke="black" stroke-width=".7"/>
+	 </Rule>
    </Style>
 
-    <Style name="parks_default">
-        <Rule>
-            <LineSymbolizer stroke="black" stroke-width="1" />
-        </Rule>
-        <Rule>
-          <PolygonSymbolizer fill="#c7e9b4"/>
-        </Rule>
-        <Rule>
-          <!--<TextSymbolizer size="14" fill="black" face-name="Decalotype Bold" halo-fill="#DFDBE3" halo-radius="1" wrap-width="20">[name]</TextSymbolizer>-->
-        </Rule>
-    </Style>
+	<Style name="parks_default">
+		<Rule>
+			<LineSymbolizer stroke="black" stroke-width="1" />
+		</Rule>
+		<Rule>
+		  <PolygonSymbolizer fill="#c7e9b4"/>
+		</Rule>
+		<Rule>
+		  <!--<TextSymbolizer size="14" fill="black" face-name="Decalotype Bold" halo-fill="#DFDBE3" halo-radius="1" wrap-width="20">[name]</TextSymbolizer>-->
+		</Rule>
+	</Style>
 </Map>

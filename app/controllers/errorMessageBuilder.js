@@ -11,14 +11,14 @@ var xmlbuilder = require('xmlbuilder');
 //builds simple error report if request cannot be parsed
 //returns XML string
 module.exports.invalidQueryFormat = function(){
-  var xml = xmlbuilder.create('ServiceExceptionReport')
-        .att('xmlns', "http://www.opengis.net/ogc")
-        .att( 'xmlns:xsi', "http://www.w3.org/2001/XMLSchema-instance")
-        .att('version', "1.3.0")
-        .att('xsi:schemaLocation', "http://www.opengis.net/ogc http://schemas.opengis.net/wms/1.3.0/exceptions_1_3_0.xsd")
-      .ele('ServiceException', {'code': 'InvalidFormat'}, "Can't parse request.")
-      .end({ pretty: true});
-      return xml;
+	var xml = xmlbuilder.create('ServiceExceptionReport')
+		.att('xmlns', "http://www.opengis.net/ogc")
+		.att( 'xmlns:xsi', "http://www.w3.org/2001/XMLSchema-instance")
+		.att('version', "1.3.0")
+		.att('xsi:schemaLocation', "http://www.opengis.net/ogc http://schemas.opengis.net/wms/1.3.0/exceptions_1_3_0.xsd")
+		.ele('ServiceException', {'code': 'InvalidFormat'}, "Can't parse request.")
+		.end({ pretty: true});
+	return xml;
 }
 
 const ERROR_CODES = {
@@ -47,11 +47,11 @@ const ERROR_CODES = {
 //returns XML string
 module.exports.buildServiceExceptionReportForMissingParams = function(missingParams){
 	var ServiceExceptionReport = xmlbuilder.create('ServiceExceptionReport')
-        .att('xmlns', "http://www.opengis.net/ogc")
-        .att( 'xmlns:xsi', "http://www.w3.org/2001/XMLSchema-instance")
-        .att('version', "1.3.0")
-        .att('xsi:schemaLocation', "http://www.opengis.net/ogc http://schemas.opengis.net/wms/1.3.0/exceptions_1_3_0.xsd");
-	
+		.att('xmlns', "http://www.opengis.net/ogc")
+		.att( 'xmlns:xsi', "http://www.w3.org/2001/XMLSchema-instance")
+		.att('version', "1.3.0")
+		.att('xsi:schemaLocation', "http://www.opengis.net/ogc http://schemas.opengis.net/wms/1.3.0/exceptions_1_3_0.xsd");
+
 	for(var param in missingParams){
 		var paramName = missingParams[param];
 		ServiceExceptionReport.ele('ServiceException', {'code': 'MissingParameter'}, "Parameter '" + paramName.toUpperCase() + "' can't be empty.");
@@ -65,16 +65,16 @@ module.exports.buildServiceExceptionReportForMissingParams = function(missingPar
 //message param is optional, will only be used if errorCode is not already defined in ERROR_CODES
 module.exports.buildServiceExceptionReportForError = function(errorCode, message){
 	var ServiceExceptionReport = xmlbuilder.create('ServiceExceptionReport')
-	        .att('xmlns', "http://www.opengis.net/ogc")
-	        .att( 'xmlns:xsi', "http://www.w3.org/2001/XMLSchema-instance")
-	        .att('version', "1.3.0")
-	        .att('xsi:schemaLocation', "http://www.opengis.net/ogc http://schemas.opengis.net/wms/1.3.0/exceptions_1_3_0.xsd");
+			.att('xmlns', "http://www.opengis.net/ogc")
+			.att( 'xmlns:xsi', "http://www.w3.org/2001/XMLSchema-instance")
+			.att('version', "1.3.0")
+			.att('xsi:schemaLocation', "http://www.opengis.net/ogc http://schemas.opengis.net/wms/1.3.0/exceptions_1_3_0.xsd");
 
 	if(Object.keys(ERROR_CODES).indexOf(errorCode) != -1){
 		ServiceExceptionReport.ele('ServiceException', {'code': errorCode}, ERROR_CODES[errorCode]);
-    } else{
+	} else{
 		ServiceExceptionReport.ele('ServiceException', {'code': errorCode}, message);
-    }
-   	
+	}
+
    	return ServiceExceptionReport.end({pretty: true});
 }

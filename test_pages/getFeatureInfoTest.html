@@ -5,70 +5,70 @@
 </div>
 <div style="display: block; margin-bottom: 10">
 	<div style="display: inline-block;">
-	    <div>
-	      <a id="test">
-	  		<img id="img" class="demo-box" style="height: 500px; width: 500px; border: 1pt solid black" src="wms?service=wms&request=getmap&layers=railroads&styles=,&format=png&height=500&width=500&bbox=-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644&crs=epsg:3857&version=1.3.0" />
-	      </a>
-	    </div>  
+		<div>
+			<a id="test">
+				<img id="img" class="demo-box" style="height: 500px; width: 500px; border: 1pt solid black" src="wms?service=wms&request=getmap&layers=railroads&styles=,&format=png&height=500&width=500&bbox=-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644&crs=epsg:3857&version=1.3.0" />
+</a>
+		</div>
 	</div>
 	<div id="layers" style="display: inline-block; float: left;">
-	   	<fieldset >
-	      <legend style="color:blue;font-weight:bold;">Layers</legend>
-	      <table>
-	         <tr>
-				<input type="checkbox" class="layers" name="layerRivers" value="rivers">Rivers<br>					
-	         </tr>
-	         <tr>
+		<fieldset >
+		<legend style="color:blue;font-weight:bold;">Layers</legend>
+		<table>
+			 <tr>
+				<input type="checkbox" class="layers" name="layerRivers" value="rivers">Rivers<br>
+			 </tr>
+			 <tr>
 				<input type="checkbox" class="layers" name="layerRailroads" value="railroads" checked>Railroads<br>
-	         </tr>
-	         <tr>
+			 </tr>
+			 <tr>
 				<input type="checkbox" class="layers" name="layerPorts" value="ports">Ports<br>
-	         </tr>
-	         <tr>
+			 </tr>
+			 <tr>
 				<input type="checkbox" class="layers" name="layerAirports" value="airports">Airports<br>
-	         </tr>  
-	         <tr>
+			 </tr>
+			 <tr>
 				<input type="checkbox" class="layers" name="layerBorders" value="world_merc">Borders<br>
-	         </tr>  
-	      </table>
-	   	</fieldset>
-	  	<fieldset >
-	      <legend style="color:blue;font-weight:bold;">Query Layers</legend>
-	      <table>
-	         <tr>
-				<input type="checkbox" class="queryLayers" name="queryRivers" value="rivers">Rivers<br>					
-	         </tr>
-	         <tr>
+			 </tr>
+		</table>
+	 	</fieldset>
+		<fieldset >
+		<legend style="color:blue;font-weight:bold;">Query Layers</legend>
+		<table>
+			 <tr>
+				<input type="checkbox" class="queryLayers" name="queryRivers" value="rivers">Rivers<br>
+			 </tr>
+			 <tr>
 				<input type="checkbox" class="queryLayers" name="queryRailroads" value="railroads" checked>Railroads<br>
-	         </tr>
-	         <tr>
+			 </tr>
+			 <tr>
 				<input type="checkbox" class="queryLayers" name="queryPorts" value="ports">Ports<br>
-	         </tr>
-	         <tr>
+			 </tr>
+			 <tr>
 				<input type="checkbox" class="queryLayers" name="queryAirports" value="airports">Airports<br>
-	         </tr>    
-	         <tr>
+			 </tr>
+			 <tr>
 				<input type="checkbox" class="queryLayers" name="queryBorders" value="world_merc">Borders<br>
-	         </tr>       
-	      </table>
-	   </fieldset>
+			 </tr>
+		</table>
+	 </fieldset>
 	</div>
 </div>
 <div id="result"><script type="text/javascript">
 
 function serializeQuery(obj) {
-  var str = [];
-  for(var p in obj)
-    if (obj.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-    }
-  return str.join("&");
+var str = [];
+for(var p in obj)
+	if (obj.hasOwnProperty(p)) {
+	str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+	}
+return str.join("&");
 }
 
 var queryLayers = ['railroads'];
 var layers = ['railroads'];
 var styles = ''
-$(document).ready(function(){	
+$(document).ready(function(){
 	$(".layers").change(function(e){
 		layers = [];
 		$(".layers").each(function(index, element){
@@ -76,27 +76,27 @@ $(document).ready(function(){
 				layers.push($(this).val())
 			}
 		}).promise().done(function(){
-			
+
 			for(var i = 0; i < layers.length; ++i){
 				styles += ',';
 			}
 
 			var reqObj = {
-		  		version: "1.3.0",
-		  		service: "wms",
-		  		request: "getmap",
-		  		layers: layers.join(','),
-		  		styles: styles,
-		  		format: "png",
-		  		height: 500,
-		  		width: 500,
-		  		bbox: "-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644",
-		  		crs: "epsg:3857"
-		  	}
+				version: "1.3.0",
+				service: "wms",
+				request: "getmap",
+				layers: layers.join(','),
+				styles: styles,
+				format: "png",
+				height: 500,
+				width: 500,
+				bbox: "-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644",
+				crs: "epsg:3857"
+			}
 
-		  	var url = "wms?" + serializeQuery(reqObj);
-		  	$("#img").attr('src', url);
-		});				
+			var url = "wms?" + serializeQuery(reqObj);
+			$("#img").attr('src', url);
+		});
 	});
 
 	$(".queryLayers").change(function(e){
@@ -107,46 +107,46 @@ $(document).ready(function(){
 			}
 		}).promise().done(function(){
 			queryLayers = newQueryLayers;
-		});			
+		});
 	});
 
 	$("#test").click(function(e) {
-	  	var offset_t = $(this).offset().top - $(window).scrollTop();
-    	var offset_l = $(this).offset().left - $(window).scrollLeft();
+		var offset_t = $(this).offset().top - $(window).scrollTop();
+		var offset_l = $(this).offset().left - $(window).scrollLeft();
 
-    	var i = Math.round( (e.clientX - e.offsetX?(e.offsetX):e.pageX) );
-    	//var j = Math.round( $("#img").height() - (e.clientY - e.offsetY?(e.offsetY):e.pageY) );
+		var i = Math.round( (e.clientX - e.offsetX?(e.offsetX):e.pageX) );
+		//var j = Math.round( $("#img").height() - (e.clientY - e.offsetY?(e.offsetY):e.pageY) );
 		var j = Math.round((e.clientY - e.offsetY?(e.offsetY):e.pageY));
-    	$("#position").html("<div>i: " + i + "</div><div>j: " + j +"</div>");
-	  	console.log(i+' : '+j);
+		$("#position").html("<div>i: " + i + "</div><div>j: " + j +"</div>");
+		console.log(i+' : '+j);
 
-	  	var reqObj = {
-	  		version: "1.3.0",
-	  		service: "wms",
-	  		request: "getfeatureinfo",
-	  		layers: layers.join(','),
-	  		styles: styles,
-	  		format: "png",
-	  		height: 500,
-	  		width: 500,
-	  		bbox: "-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644",
-	  		crs: "epsg:3857",
-	  		query_layers: queryLayers.join(','),
-	  		info_format: "json",
-	  		i: i,
-	  		j: j
-	  	}
+		var reqObj = {
+			version: "1.3.0",
+			service: "wms",
+			request: "getfeatureinfo",
+			layers: layers.join(','),
+			styles: styles,
+			format: "png",
+			height: 500,
+			width: 500,
+			bbox: "-1149612.9054086767,4064585.8242651625,3302079.621918805,8164056.525254644",
+			crs: "epsg:3857",
+			query_layers: queryLayers.join(','),
+			info_format: "json",
+			i: i,
+			j: j
+		}
 
-	  	$.get( "wms", reqObj).done(function(data) {
-		  $( "#result" ).empty();
-		  //console.log(JSON.stringify(data));
-		  $.each(data, function(index, element){
-		  	 $( "#result" ).append("<div id='result" + index + "' style='width: 250; border: 1pt solid black; margin-bottom: 10; margin-left: 10; display: inline-block; float: left'></div>");
-		  	$.each(element, function(key, value){
-		  		$("#result" + index).append("<div><strong>" + key + "</strong>: " + value + "</div>");
-		  		//console.log(key + ": " + value);
-		  	});
-		  });
+		$.get( "wms", reqObj).done(function(data) {
+			$( "#result" ).empty();
+			//console.log(JSON.stringify(data));
+			$.each(data, function(index, element){
+				$( "#result" ).append("<div id='result" + index + "' style='width: 250; border: 1pt solid black; margin-bottom: 10; margin-left: 10; display: inline-block; float: left'></div>");
+				$.each(element, function(key, value){
+					$("#result" + index).append("<div><strong>" + key + "</strong>: " + value + "</div>");
+					//console.log(key + ": " + value);
+				});
+			});
 		});
 	});
 });

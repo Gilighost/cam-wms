@@ -5,8 +5,8 @@
  ********************************************************************/
 
 var express = require('express'),
-    wmsRequestHandler = require('./controllers/wmsRequestHandler'),
-    path = require('path');
+	wmsRequestHandler = require('./controllers/wmsRequestHandler'),
+	path = require('path');
 
 var router = express.Router();
 

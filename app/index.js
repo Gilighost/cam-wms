@@ -3,10 +3,10 @@
 
  Exports: application
  ********************************************************************/
-var config   = require('../config'),
-    express  = require('express'),
-    morgan   = require('morgan'),
-    parser   = require('body-parser');
+var config		= require('../config'),
+		express		= require('express'),
+		morgan		= require('morgan'),
+		parser		= require('body-parser');
 
 // Create application
 var app = express();
@@ -26,7 +26,7 @@ app.use(express.static('./test_pages'));
 
 // For everything else
 app.use(function(req, res, next) {
-  res.status(404).send("ERROR: 404");
+	res.status(404).send("ERROR: 404");
 });
 
 // Export app

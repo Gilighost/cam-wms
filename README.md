@@ -18,10 +18,10 @@ In order to run the project you must download and install the Mapnik binaries fr
 * GetCapabilities
   *   This operation requests metadata about the operations, services, and data (“capabilities”) that are offered by a WMS server.
 * GetMap
-  *  This operation requests that the server generate a map. The core parameters specify one or more layers and styles to appear on the map, a bounding box for the map extent, a target spatial reference system, and a width, height, and format for the output. The information needed to specify values for parameters such as layers, styles and srs can be obtained from the Capabilities document. The response is a map image, or other map output artifact, depending on the format requested. 
+  *  This operation requests that the server generate a map. The core parameters specify one or more layers and styles to appear on the map, a bounding box for the map extent, a target spatial reference system, and a width, height, and format for the output. The information needed to specify values for parameters such as layers, styles and srs can be obtained from the Capabilities document. The response is a map image, or other map output artifact, depending on the format requested.
 * GetFeatureInfo
   *   This operation requests the spatial and attribute data for the features at a given location on a map.
-  
+
 ### Implementation Specification
 To see the full Implementation Specification see the [OpenGIS® Web Map Server Implementation Specification](http://www.opengeospatial.org/standards/wms#downloads)
 
@@ -33,3 +33,4 @@ To see the full Implementation Specification see the [OpenGIS® Web Map Server I
 * Implement more optional parameters
 * Support more SRSs
 * Allow CartoCSS layer styling
+* Generate Capabilities document rather than static file
